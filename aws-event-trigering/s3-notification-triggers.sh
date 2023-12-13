@@ -10,10 +10,10 @@ echo "AWS Account ID: $aws_account_id"
 
 # Set AWS region and bucket name
 aws_region="us-east-1"
-bucket_name="ritika-ultimate-bucket"
+bucket_name="parker-ultimate-bucket"
 lambda_func_name="s3-lambda-function"
 role_name="s3-lambda-sns"
-email_address="writetoritika@gmail.com"
+email_address="parkeranon@gmail.com"
 
 # Create IAM Role for the project
 role_response=$(aws iam create-role --role-name s3-lambda-sns --assume-role-policy-document '{
@@ -62,7 +62,7 @@ aws lambda create-function \
   --handler "s3-lambda-function/s3-lambda-function.lambda_handler" \
   --memory-size 128 \
   --timeout 30 \
-  --role "arn:aws:iam::733796618401:role/$role_name" \
+  --role "arn:aws:iam::486571932135:role/$role_name" \
   --zip-file "fileb://./s3-lambda-function.zip"
 
 # Add Permissions to S3 Bucket to invoke Lambda
@@ -79,7 +79,7 @@ aws s3api put-bucket-notification-configuration \
   --bucket "$bucket_name" \
   --notification-configuration '{
     "LambdaFunctionConfigurations": [{
-        "LambdaFunctionArn": "arn:aws:lambda:us-east-1:733796618401:function:s3-lambda-function",
+        "LambdaFunctionArn": "arn:aws:lambda:us-east-1:486571932135:function:s3-lambda-function",
         "Events": ["s3:ObjectCreated:*"]
     }]
 }'
@@ -103,6 +103,6 @@ aws sns subscribe \
 aws sns publish \
   --topic-arn "$topic_arn" \
   --subject "A new object created in s3 bucket" \
-  --message "Hello from Abhishek.Veeramalla YouTube channel, Learn DevOps Zero to Hero for Free"
+  --message "The Event triger is done Succesfully"
 
 
